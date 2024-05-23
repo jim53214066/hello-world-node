@@ -6,7 +6,7 @@ pool:
   vmImage: 'az400'
 
 steps:
-- task: UseNode@2
+- task: UseNode@1
   inputs:
     versionSpec: '14.x' # Specify the Node.js version
 
