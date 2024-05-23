@@ -2,8 +2,7 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'az400'
+pool: 'az400'
 
 steps:
 - task: UseNode@1
