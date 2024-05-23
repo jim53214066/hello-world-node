@@ -26,6 +26,6 @@ steps:
   inputs:
     azureSubscription: 'ConnectToSubScription2023'
     appType: 'webAppLinux'
-    appName: 'hello world'
+    appName: 'helloworld53214066'
     package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
