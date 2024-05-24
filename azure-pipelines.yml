@@ -1,31 +1,40 @@
-# .azure-pipelines.yml
 trigger:
-- master
+  branches:
+    include:
+      - master
+  tags:
+    include:
+      - '[0-9]+.[0-9]+.[0-9]+'
+    exclude:
+      - '*'
 
-pool: 'az400'
-
-steps:
-- task: UseNode@1
-  inputs:
-    versionSpec: '14.x' # Specify the Node.js version
-
-- script: |
-    npm install
-    npm test
-  displayName: 'Install dependencies and run tests'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'ConnectToSubScription2023'
-    appType: 'webAppLinux'
-    appName: 'helloworld53214066'
-    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+stages:
+  - stage: __default
+    jobs:
+      - job: Job
+        pool:
+          name: 'az400'
+        steps:
+          - task: UseNode@1
+            inputs:
+              versionSpec: '14.x'
+          - task: CmdLine@2
+            displayName: 'Install dependencies and run tests'
+            inputs:
+              script: |
+                npm install
+                npm test
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Build.SourcesDirectory)'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+              replaceExistingArchive: true
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'ConnectToSubScription2023'
+              appType: 'webAppLinux'
+              appName: 'helloworld53214066'
+              package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
