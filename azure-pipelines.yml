@@ -9,6 +9,7 @@ trigger:
       - '*'
 stages:
   - stage: __default
+
     jobs:
       - job: Job
         pool:
@@ -36,4 +37,3 @@ stages:
               appType: 'webAppLinux'
               appName: 'helloworld53214066'
               package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-
